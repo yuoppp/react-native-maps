@@ -3,10 +3,12 @@
 //  Created by Nick Italiano on 3/5/17.
 //
 
+#ifdef HAVE_GOOGLE_MAPS
+
 #import "AIRGoogleMapOverlay.h"
 
 #import <React/RCTEventDispatcher.h>
-#import <React/RCTImageLoader.h>
+#import <React/RCTImageLoaderProtocol.h>
 #import <React/RCTUtils.h>
 #import <React/UIView+React.h>
 
@@ -40,7 +42,7 @@
   }
 
   __weak typeof(self) weakSelf = self;
-  _reloadImageCancellationBlock = [_bridge.imageLoader loadImageWithURLRequest:[RCTConvert NSURLRequest:_imageSrc]
+  _reloadImageCancellationBlock = [[_bridge moduleForName:@"ImageLoader"] loadImageWithURLRequest:[RCTConvert NSURLRequest:_imageSrc]
                                                                           size:weakSelf.bounds.size
                                                                          scale:RCTScreenScale()
                                                                        clipped:YES
@@ -74,3 +76,5 @@
 }
 
 @end
+
+#endif
